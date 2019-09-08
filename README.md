@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/ernestgwilsonii/docker-raspberry-pi-mumble-server.svg?branch=master)](https://travis-ci.org/ernestgwilsonii/docker-raspberry-pi-mumble-server)
 # docker-raspberry-pi-mumble-server
 Mumble server (in a Docker Container) for Raspberry Pi
 
