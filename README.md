@@ -5,7 +5,7 @@ Mumble server (in a Docker Container) for Raspberry Pi
 ```
 ############################################
 # Mumble Server in Docker for Raspberry Pi #
-#           REF: https://mumble_server.org #
+#            REF: https://wiki.mumble.info #
 ############################################
 
 
@@ -15,7 +15,7 @@ cd /tmp
 git clone https://github.com/ernestgwilsonii/docker-raspberry-pi-mumble-server.git
 cd docker-raspberry-pi-mumble-server
 
-# REF: 
+# Mumble Releases REF: https://github.com/mumble-voip/mumble/releases
 MUMBLE_SERVER_VERSION=$(cat version.txt)
 echo $MUMBLE_SERVER_VERSION
 export MUMBLE_SERVER_VERSION=$MUMBLE_SERVER_VERSION
