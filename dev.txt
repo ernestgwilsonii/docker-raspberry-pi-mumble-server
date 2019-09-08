@@ -1,0 +1,49 @@
+# Download the repo
+cd /tmp
+git clone https://github.com/ernestgwilsonii/docker-raspberry-pi-mumble-server.git
+cd docker-raspberry-pi-mumble-server
+
+# Setup dir on Raspberry Pi
+mkdir -p /opt/mumble-server/logs
+cp mumble-server.ini /opt/mumble-server/mumble-server.ini
+chmod -R a+rw /opt/mumble-server
+
+# Interactively run Docker
+docker run -it -v /opt/mumble-server/mumble-server.ini:/etc/mumble-server.ini -v /opt/mumble-server:/var/lib/mumble-server -v /opt/mumble-server/logs:/var/log/mumble-server arm32v7/debian:buster-slim bash
+
+apt-get update
+apt-get upgrade -y
+apt-get install -y mumble-server
+
+# Start Mumble 
+murmurd -fg
+
+# Watch for the starting password in the output like: Password for 'SuperUser' set to 'blahblahblah'
+# /etc/mumble-server.ini
+# /var/lib/mumble-server/mumble-server.sqlite
+# /var/log/mumble-server/mumble-server.log
+# 0.0.0.0:64738 <--Both TCP and UDP
+# uname=mumble-server
+
+
+#/usr/sbin/murmurd
+murmurd --help
+Usage: /usr/sbin/murmurd [-ini <inifile>] [-supw <password>]
+  -ini <inifile>         Specify ini file to use.
+  -supw <pw> [srv]       Set password for 'SuperUser' account on server srv.
+  -readsupw [srv]        Reads password for server srv from standard input.
+  -disablesu [srv]       Disable password for 'SuperUser' account on server srv.
+  -limits                Tests and shows how many file descriptors and threads can be created.
+                         The purpose of this option is to test how many clients Murmur can handle.
+                         Murmur will exit after this test.
+  -v                     Add verbose output.
+  -fg                    Don't detach from console.
+  -wipessl               Remove SSL certificates from database.
+  -wipelogs              Remove all log entries from database.
+  -version               Show version information.
+
+  -license               Show Murmur's license.
+  -authors               Show Murmur's authors.
+  -third-party-licenses  Show licenses for third-party software used by Murmur.
+
+If no inifile is provided, murmur will search for one in default locations.

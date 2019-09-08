@@ -1,0 +1,19 @@
+FROM arm32v7/debian:buster-slim
+
+ARG MUMBLE_SERVER_VERSION=1.3.0
+ENV MUMBLE_SERVER_VERSION=$MUMBLE_SERVER_VERSION
+
+RUN apt-get update \
+    && apt-get upgrade -y \
+    && apt-get install -y mumble-server \
+    && mkdir -p /var/log/mumble-server \
+    && chown -R mumble-server:root /var/log/mumble-server \
+    && apt-get clean -y \
+    && apt-get autoclean -y \
+    && apt-get autoremove -y \
+    && rm -rf /var/lib/apt/lists/*
+    
+EXPOSE 64738/tcp
+EXPOSE 64738/udp
+ 
+CMD ["/usr/sbin/murmurd", "-fg"]
