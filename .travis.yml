@@ -11,14 +11,25 @@ before_install:
   # Display default Docker version
   - docker --version
   - docker build --help
-  # Switch to a Docker version that understand "docker build --volume" syntax for qemu to work!
+  # Switch to a Docker version that understands "docker build --volume" syntax for qemu to work!
+  # Only Docker 17.04-dev has the correct "docker build --volume" flag!
+  # The "docker build --volume" is needed for qemu to work and build ARM on i386 via Travis
+  # A Docker downgrade is needed:
   - sudo apt-get update
   - sudo apt-get install -y wget git
   - sudo apt-get remove docker-ce
+  # Add specific Docker repo for version 17.04.0~dev~git20170712.145042.0.7d584ad-0~ubuntu-trusty
   - echo "deb [arch=amd64 trusted=yes] http://ftp.unicamp.br/pub/linuxpatch/ubuntu/14_04/misc/docker-17.04.0-ce-amd64/ trusty main" | sudo tee /etc/apt/sources.list.d/docker-engine.list
+  - cat /etc/apt/sources.list.d/docker-engine.list
+  - ls -alFh /etc/apt/sources.list.d/ | grep docker
+  # We need a source that has package "libsystemd-journal0" that is needed by old docker-engine 17.04-dev
+  - sudo echo "deb http://cz.archive.ubuntu.com/ubuntu trusty main" >> /etc/apt/sources.list
   - sudo apt-get update
-  - sudo apt-get install -y docker-engine
-  # Display current Docker version
+  - apt-cache show docker-engine | grep Version
+  - apt-cache show libsystemd-journal0 | grep Version
+  - sudo apt-get install -y --allow-unauthenticated libsystemd-journal0
+  - sudo apt-get install -y --allow-unauthenticated docker-engine=17.04.0~dev~git20170712.145042.0.7d584ad-0~ubuntu-trusty
+  # Display current Docker version: It needs to be 17.04-dev to work for an ARM (Raspberry Pi) compile in x86 Travis
   - docker --version
   - docker build --help
   # Use qemu to build arm32v7 for Raspberry Pi using Travis CI on x86_64 in the cloud!
