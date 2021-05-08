@@ -3,7 +3,7 @@ version: '3.4'
 services:
 
   mumble_server:
-    image: ernestgwilsonii/docker-raspberry-pi-mumble-server:1.3.0
+    image: ernestgwilsonii/docker-raspberry-pi-mumble-server:1.3.4
     hostname: mumble-server
     ports:
       # Mumble Control TCP 64738
