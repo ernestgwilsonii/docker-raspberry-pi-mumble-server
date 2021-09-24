@@ -54,7 +54,7 @@ sudo chmod -R a+rw /opt/mumble-server
 ##########
 
 # Docker (without Swarm)
-docker run --name mumble_server -d -v /opt/mumble-server/mumble-server.ini:/etc/mumble-server.ini -v /opt/mumble-server:/var/lib/mumble-server -v /opt/mumble-server/logs:/var/log/mumble-server -p 64738:64738/tcp -p 64738:64738/udp ernestgwilsonii/docker-raspberry-pi-mumble-server:1.3.4
+docker run --restart unless-stopped --name mumble_server -d -v /opt/mumble-server/mumble-server.ini:/etc/mumble-server.ini -v /opt/mumble-server:/var/lib/mumble-server -v /opt/mumble-server/logs:/var/log/mumble-server -p 64738:64738/tcp -p 64738:64738/udp ernestgwilsonii/docker-raspberry-pi-mumble-server:1.3.4
 
 # Verify
 docker ps
